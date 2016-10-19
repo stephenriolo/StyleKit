@@ -11,6 +11,10 @@ class Stylist {
     var currentComponent: AnyClass?
     var viewStack = [UIAppearanceContainer.Type]()
     
+    enum propertyType: String {
+        case mixins = "mixins"
+    }
+    
     init(data: Style, styleParser: StyleParsable?) {
         self.styleParser = styleParser ?? StyleParser()
         
@@ -40,6 +44,22 @@ class Stylist {
     private func validateAndApply(_ data: Style) {
         
         for (key, value) in data {
+            
+            guard key.lowercased() != propertyType.mixins.rawValue else {
+                
+                if let mixins = value as? [String] {
+                    for mixin in mixins {
+                        if let mixinStyle = aliases[mixin] as? Style {
+                            validateAndApply(mixinStyle)
+                        } else {
+                            SKLogger.error("Trying to use Alias \(value) which has not been defined")
+                        }
+                    }
+                }
+                
+                return
+            }
+
             if let value = value as? Style , NSClassFromString(key) != nil {
                 if selectCurrentComponent(key), let appearanceContainer = self.currentComponent! as? UIAppearanceContainer.Type {
                     viewStack.append(appearanceContainer)

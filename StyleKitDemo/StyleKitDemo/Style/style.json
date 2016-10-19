@@ -4,6 +4,23 @@
     "@primaryColor": "#cd0073",
     "@secondaryColor": "#8000c6",
     "@transparencyValue": 90,
+    "@textFieldStyle": {
+        "backgroundColor": "#000000"
+    },
+    "@buttonStyle": {
+        "font": "@secondaryFont",
+        "titleColor:normal": "@primaryColor",
+        "titleColor:highlighted": "@secondaryColor",
+        "backgroundColor": "#555"
+    },
+    "@labelStyle": {
+        "font": "@mainFont",
+        "color": "@primaryColor"
+    },
+    "@secondLabelStyle": {
+        "font": "@secondaryFont",
+        "color": "@secondaryColor"
+    },
     "StyleKitDemo.SKNavigationBar": {
         "tintColor": "@secondaryColor",
         "titleTextAttributes": {
@@ -31,12 +48,11 @@
         "titleColor:normal": "#fff",
         "titleColor:highlighted": "#fff",
         "font": "HelveticaNeue-Light:13.0",
-        "transparency": "@transparencyValue"
+        "transparency": "@transparencyValue",
+        
     },
     "UIButton": {
-        "font": "@secondaryFont",
-        "titleColor:normal": "#000",
-        "titleColor:highlighted": "#555"
+        "mixins":["@buttonStyle"]
     },
     "StyleKitDemo.SKLabel": {
         "font": "HelveticaNeue-Light:17.0",
@@ -61,17 +77,18 @@
         }
     },
     "UITextField": {
-        "font": "HelveticaNeue-Light:15.0",
-        "textColor": "#000",
+        "backgroundColor": "#FFF",
         "UILabel": {
-            "font": "HelveticaNeue-Medium:15.0",
-            "color": "#000"
+            "mixins":["@labelStyle"]
         }
     },
     "StyleKitDemo.SKTextField": {
-        "textColor": "@primaryColor",
+        "font": "HelveticaNeue-Light:15.0",
+        "textColor": "#000",
+        "mixins": ["@textFieldStyle"],
         "UILabel": {
-            "color": "@primaryColor"
+            "color": "@primaryColor",
+            "mixins": ["@secondLabelStyle"]
         }
     },
     "UISegmentedControl": {
